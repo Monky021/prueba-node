@@ -4,6 +4,7 @@ export interface HttpResponse {
   body: any,
   success: boolean,
   message: string,
+  error?: any
 }
 
 export interface HttpRequest {

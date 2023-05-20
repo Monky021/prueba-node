@@ -10,6 +10,11 @@ import boom from '@hapi/boom';
 export default class UserData implements UserRepository {
 
     async create(user: IUser): Promise<User> {
+        const oldUser = await this.findByPhone(user.phone)
+        if(oldUser){
+            console.log({oldUser});
+            throw boom.badRequest('This user is already registered')
+        }
         const hash = await hashPassword(user.password)
 
         const userHash: IUser = {
@@ -59,20 +64,21 @@ export default class UserData implements UserRepository {
         user.destroy()
         
     }
-    async findByPhone(phone: string): Promise<User> {
+    async findByPhone(phone: string): Promise<User | null> {
         const user = await UserModel.findOne({
             where: {
                 phone
             }
         })
-        if(!user){
-            throw boom.unauthorized()
-        }
+        
         return user
     }
 
     async login(phone: string, password: string): Promise<User> {
         const user = await this.findByPhone(phone)
+        if(!user){
+            throw boom.unauthorized()
+        }
         const isMatch = await comparePassword(password, user.password)
         if(!isMatch){
             throw (boom.unauthorized())

@@ -14,7 +14,7 @@ export default class RegisterUser implements Controller {
         
         try {
             const data = httpRequest.body
-
+            
             const {dataValues} = await this.userRepository.create({...data, status: false, sessionActive: false})
             const {password, ...user } = dataValues
         

@@ -18,6 +18,11 @@ const boom_1 = __importDefault(require("@hapi/boom"));
 class UserData {
     create(user) {
         return __awaiter(this, void 0, void 0, function* () {
+            const oldUser = yield this.findByPhone(user.phone);
+            if (oldUser) {
+                console.log({ oldUser });
+                throw boom_1.default.badRequest('This user is already registered');
+            }
             const hash = yield (0, manager_password_1.hashPassword)(user.password);
             const userHash = Object.assign(Object.assign({}, user), { password: hash });
             const userDb = yield User_1.default.create(userHash);
@@ -70,15 +75,15 @@ class UserData {
                     phone
                 }
             });
-            if (!user) {
-                throw boom_1.default.unauthorized();
-            }
             return user;
         });
     }
     login(phone, password) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield this.findByPhone(phone);
+            if (!user) {
+                throw boom_1.default.unauthorized();
+            }
             const isMatch = yield (0, manager_password_1.comparePassword)(password, user.password);
             if (!isMatch) {
                 throw (boom_1.default.unauthorized());
