@@ -3,7 +3,7 @@
 ## Instalación 
 
 - Clonar repositorio 
-    -git clone https://github.com/Monky021/prueba-node.git
+git clone https://github.com/Monky021/prueba-node.git
 - Entrara a la carpeta
     cd prueba-node
 - Instalar dependencias
