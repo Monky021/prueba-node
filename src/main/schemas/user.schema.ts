@@ -15,3 +15,7 @@ export const createUserSchema = Joi.object({
     password: password.required(),
     address: address.required()
 })
+
+export const getUserSchema = Joi.object({
+    id: id.required()
+})

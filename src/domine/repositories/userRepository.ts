@@ -4,4 +4,5 @@ import { IUser } from '../entities/User';
 export interface UserRepository {
     create(user: IUser): Promise<User>;
     getAll(): Promise<User[]>;
+    getOne(id: User['id']): Promise<User>
 }
