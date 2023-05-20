@@ -5,8 +5,8 @@ import { ServerError } from './server-error';
 import boom from '@hapi/boom';
 
 
-export const success = <T>(data: T, message: string, success=true) : HttpResponse => ({
-  statusCode: 200,
+export const success = <T>(data: T, message: string, statusCode: number, success=true) : HttpResponse => ({
+  statusCode,
   body: data,
   message,
   success

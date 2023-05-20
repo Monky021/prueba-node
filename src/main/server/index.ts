@@ -2,8 +2,9 @@
 import express, {Application, Express} from 'express'
 import sequelize from '../../db/sequelize'
 import cors from 'cors'
+import morgan from 'morgan'
 import { boomErrorHandler, errorHandler, logErrors, ormErrorHandler } from '../middlewares/error.handler'
-// import routesApi from '../routes'
+import routesApi from '../routes'
 
 // import * as passportStrategies from '../utils/auth'
 
@@ -33,13 +34,13 @@ class Server {
   }
 
   routes(app: Express){
-    // routesApi(app)
+    routesApi(app)
   }
 
 
   middlewares(){
     this.app.use(express.json());
-
+    morgan(':method :url :status :res[content-length] - :response-time ms')
     const whitelist = ['http://localhost:8080', 'https://myapp.co'];
     const options: cors.CorsOptions = {
       origin: (origin, callback) => {

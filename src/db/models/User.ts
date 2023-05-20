@@ -33,6 +33,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     //models associate
     
   }
+  
   static config(sequelize: Sequelize) {
     return {
       sequelize,
