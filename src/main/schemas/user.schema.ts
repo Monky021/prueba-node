@@ -19,3 +19,10 @@ export const createUserSchema = Joi.object({
 export const getUserSchema = Joi.object({
     id: id.required()
 })
+
+export const updateUserSchema = Joi.object({
+    name,
+    phone,
+    email,
+    address,
+})

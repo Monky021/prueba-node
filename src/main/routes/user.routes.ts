@@ -1,10 +1,11 @@
 import { Router } from 'express'
 import validatorHandler from '../middlewares/validator.handler';
-import { createUserSchema, getUserSchema } from '../schemas/user.schema';
+import { createUserSchema, getUserSchema, updateUserSchema } from '../schemas/user.schema';
 import { AdapterRoute } from '../adapters/express-adapter';
 import { makeRegisterUserController } from '../factory/user/register-user';
-import { makeGetUsersController } from '../factory/user/lsit-user';
+import { makeGetUsersController } from '../factory/user/list-user';
 import { makeGetUserController } from '../factory/user/get-user';
+import { makeUpdateUserController } from '../factory/user/update-user';
 
 
 const router = Router()
@@ -17,6 +18,9 @@ router.get('/', AdapterRoute(makeGetUsersController()))
 
 //Ruta para obtener un usuario
 router.get('/:id', validatorHandler(getUserSchema, 'params'), AdapterRoute(makeGetUserController()))
+
+//Ruta para actualizar usuario
+router.put('/:id', validatorHandler(getUserSchema, 'params'), validatorHandler(updateUserSchema, 'body'), AdapterRoute(makeUpdateUserController()) )
 export default router
 
 

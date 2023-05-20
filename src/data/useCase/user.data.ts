@@ -1,5 +1,5 @@
 import { UserRepository } from '../../domine/repositories/userRepository';
-import { IUser } from '../../domine/entities/User';
+import { IUser, UpdateUser } from '../../domine/entities/User';
 import User from '../../db/models/User';
 import UserModel from '../../db/models/User';
 import { hashPassword } from '../../main/helpers/hash-password';
@@ -45,5 +45,12 @@ export default class UserData implements UserRepository {
         }
 
         return user
+    }
+    async update(id: number, changes: UpdateUser ): Promise<User> {
+        
+        const user = await this.getOne(id)
+
+        const update = await user.update(changes)
+        return update
     }
 } 
