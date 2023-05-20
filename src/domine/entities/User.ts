@@ -6,7 +6,7 @@ export interface IUser {
     email: string,
     password: string,
     status: boolean,
-    login: boolean,
+    sessionActive: boolean,
 }
 
 export interface UpdateUser extends Partial<IUser> {}

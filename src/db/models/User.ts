@@ -16,7 +16,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
   declare password: string
   declare phone: string
   declare status: boolean
-  declare login: boolean
+  declare sessionActive: boolean
   declare address: string
   declare recoveryToken: string | null
   
@@ -72,7 +72,8 @@ export const initUser = (sequelize: Sequelize) => {
         allowNull: false,
         defaultValue: false
       },
-      login: {
+      sessionActive: {
+        field: 'session_active',
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false

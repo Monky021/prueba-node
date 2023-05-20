@@ -18,4 +18,15 @@ export default class UserData implements UserRepository {
         const userDb = await UserModel.create(userHash) 
         return userDb 
     }
+    
+    async getAll(): Promise<User[]> {
+        
+        const listUser = await UserModel.findAll({
+            attributes: {
+                exclude: ['password', 'recoveryToken']
+            }
+        })
+
+        return listUser
+    }
 } 
