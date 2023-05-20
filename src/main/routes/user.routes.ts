@@ -7,6 +7,8 @@ import { makeGetUsersController } from '../factory/user/list-user';
 import { makeGetUserController } from '../factory/user/get-user';
 import { makeUpdateUserController } from '../factory/user/update-user';
 import { makeDeleteUserController } from '../factory/user/delete-user';
+import passport from 'passport';
+import { makeLoginUserController } from '../factory/user/login';
 
 
 const router = Router()
@@ -25,7 +27,9 @@ router.put('/:id', validatorHandler(getUserSchema, 'params'), validatorHandler(u
 
 //Ruta para eliminar un usuario 
 router.delete('/:id', validatorHandler(getUserSchema, 'params'), AdapterRoute(makeDeleteUserController()))
- 
+
+//Ruta para hacer login
+router.post('/login', passport.authenticate('local', {session: false}), AdapterRoute(makeLoginUserController()))
 export default router
 
 

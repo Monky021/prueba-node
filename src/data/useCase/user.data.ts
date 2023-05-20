@@ -2,7 +2,7 @@ import { UserRepository } from '../../domine/repositories/userRepository';
 import { IUser, UpdateUser } from '../../domine/entities/User';
 import User from '../../db/models/User';
 import UserModel from '../../db/models/User';
-import { hashPassword } from '../../main/helpers/hash-password';
+import { hashPassword, comparePassword } from '../../main/helpers/manager-password';
 import boom from '@hapi/boom';
 
 
@@ -41,7 +41,7 @@ export default class UserData implements UserRepository {
             }
         })
         if (!user) {
-            throw boom.badRequest('The user was not found.')
+            throw boom.notFound('The user was not found.')
         }
 
         return user
@@ -57,6 +57,27 @@ export default class UserData implements UserRepository {
     async delete(id: number): Promise<void> {
         const user = await this.getOne(id)
         user.destroy()
+        
+    }
+    async findByPhone(phone: string): Promise<User> {
+        const user = await UserModel.findOne({
+            where: {
+                phone
+            }
+        })
+        if(!user){
+            throw boom.unauthorized()
+        }
+        return user
+    }
+
+    async login(phone: string, password: string): Promise<User> {
+        const user = await this.findByPhone(phone)
+        const isMatch = await comparePassword(password, user.password)
+        if(!isMatch){
+            throw (boom.unauthorized())
+        }
+        return user
         
     }
 } 

@@ -11,7 +11,8 @@ export const config = {
     emailPass: process.env.EMAIL_PASS as string,
     secret: process.env.SECRET as string,
     secretPassword: process.env.SECRET_PASSWORD as string,
-    dialect: process.env.DIALECT || 'postgres'
+    dialect: process.env.DIALECT || 'postgres',
+    type_token: process.env.TYPE_TOKEN || 'bearer'
 
 }
 

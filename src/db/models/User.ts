@@ -87,6 +87,7 @@ export const initUser = (sequelize: Sequelize) => {
       phone: {
         type: DataTypes.STRING(10),
         allowNull: false,
+        unique: true,
       },
       address: {
         type: DataTypes.STRING(100),

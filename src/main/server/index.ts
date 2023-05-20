@@ -6,7 +6,7 @@ import morgan from 'morgan'
 import { boomErrorHandler, errorHandler, logErrors, ormErrorHandler } from '../middlewares/error.handler'
 import routesApi from '../routes'
 
-// import * as passportStrategies from '../utils/auth'
+import * as passportStrategies from '../services/auth'
 
 
 class Server {
@@ -52,7 +52,7 @@ class Server {
       }
     }
     this.app.use(cors(options));
-    // passportStrategies
+    passportStrategies
   }
 
   logErrors(){

@@ -6,5 +6,6 @@ export interface UserRepository {
     getAll(): Promise<User[]>;
     getOne(id: User['id']): Promise<User>;
     update(id:User['id'], changes: UpdateUser): Promise<User>;
-    delete(id: User['id']): Promise<void>
+    delete(id: User['id']): Promise<void>;
+    login(phone: User['phone'], password: User['password'] ): Promise<User>
 }
