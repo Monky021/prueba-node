@@ -6,6 +6,7 @@ import { makeRegisterUserController } from '../factory/user/register-user';
 import { makeGetUsersController } from '../factory/user/list-user';
 import { makeGetUserController } from '../factory/user/get-user';
 import { makeUpdateUserController } from '../factory/user/update-user';
+import { makeDeleteUserController } from '../factory/user/delete-user';
 
 
 const router = Router()
@@ -21,6 +22,10 @@ router.get('/:id', validatorHandler(getUserSchema, 'params'), AdapterRoute(makeG
 
 //Ruta para actualizar usuario
 router.put('/:id', validatorHandler(getUserSchema, 'params'), validatorHandler(updateUserSchema, 'body'), AdapterRoute(makeUpdateUserController()) )
+
+//Ruta para eliminar un usuario 
+router.delete('/:id', validatorHandler(getUserSchema, 'params'), AdapterRoute(makeDeleteUserController()))
+ 
 export default router
 
 

@@ -16,12 +16,12 @@ export default class UserData implements UserRepository {
             ...user,
             password: hash
         }
-        const userDb = await UserModel.create(userHash) 
-        return userDb 
+        const userDb = await UserModel.create(userHash)
+        return userDb
     }
-    
+
     async getAll(): Promise<User[]> {
-        
+
         const listUser = await UserModel.findAll({
             attributes: {
                 exclude: ['password', 'recoveryToken']
@@ -30,8 +30,8 @@ export default class UserData implements UserRepository {
 
         return listUser
     }
-    async getOne(id: number ): Promise<User> {
-        
+    async getOne(id: number): Promise<User> {
+
         const user = await UserModel.findOne({
             where: {
                 id
@@ -40,17 +40,23 @@ export default class UserData implements UserRepository {
                 exclude: ['password']
             }
         })
-        if(!user){
+        if (!user) {
             throw boom.badRequest('The user was not found.')
         }
 
         return user
     }
-    async update(id: number, changes: UpdateUser ): Promise<User> {
-        
+    async update(id: number, changes: UpdateUser): Promise<User> {
+
         const user = await this.getOne(id)
 
         const update = await user.update(changes)
         return update
+    }
+
+    async delete(id: number): Promise<void> {
+        const user = await this.getOne(id)
+        user.destroy()
+        
     }
 } 
